@@ -29,7 +29,11 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<fmt:formatDate type="both" value="${let.createtime}" />
+<<<<<<< HEAD
 					<%-- 来自${let.formperson} --%>
+=======
+					来自${let.formperson}
+>>>>>>> 4f84c387ce5f92cc3337e1e11a5e0e176001a269
 				</h3>
 				<span></span>
 			</div>
