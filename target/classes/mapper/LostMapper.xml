@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzb.mapper.LostMapper">
+  <resultMap id="BaseResultMap" type="com.xzb.pojo.Lost">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="pickDate" jdbcType="TIMESTAMP" property="pickDate" />
+    <result column="pickperson" jdbcType="VARCHAR" property="pickperson" />
+    <result column="pickplace" jdbcType="VARCHAR" property="pickplace" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <result column="claimperson" jdbcType="VARCHAR" property="claimperson" />
+    <result column="claimdate" jdbcType="TIMESTAMP" property="claimdate" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, pickDate, pickperson, pickplace, code, claimperson, claimdate, cid
+  </sql>
+  <select id="selectByExample" parameterType="com.xzb.pojo.LostExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from lost
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lost
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lost
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xzb.pojo.Lost" useGeneratedKeys="true">
+    insert into lost (name, pickDate, pickperson, 
+      pickplace, code, claimperson, 
+      claimdate, cid)
+    values (#{name,jdbcType=VARCHAR}, #{pickDate,jdbcType=TIMESTAMP}, #{pickperson,jdbcType=VARCHAR}, 
+      #{pickplace,jdbcType=VARCHAR}, #{code,jdbcType=INTEGER}, #{claimperson,jdbcType=VARCHAR}, 
+      #{claimdate,jdbcType=TIMESTAMP}, #{cid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xzb.pojo.Lost" useGeneratedKeys="true">
+    insert into lost
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="pickDate != null">
+        pickDate,
+      </if>
+      <if test="pickperson != null">
+        pickperson,
+      </if>
+      <if test="pickplace != null">
+        pickplace,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="claimperson != null">
+        claimperson,
+      </if>
+      <if test="claimdate != null">
+        claimdate,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pickDate != null">
+        #{pickDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pickperson != null">
+        #{pickperson,jdbcType=VARCHAR},
+      </if>
+      <if test="pickplace != null">
+        #{pickplace,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=INTEGER},
+      </if>
+      <if test="claimperson != null">
+        #{claimperson,jdbcType=VARCHAR},
+      </if>
+      <if test="claimdate != null">
+        #{claimdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xzb.pojo.Lost">
+    update lost
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pickDate != null">
+        pickDate = #{pickDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pickperson != null">
+        pickperson = #{pickperson,jdbcType=VARCHAR},
+      </if>
+      <if test="pickplace != null">
+        pickplace = #{pickplace,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=INTEGER},
+      </if>
+      <if test="claimperson != null">
+        claimperson = #{claimperson,jdbcType=VARCHAR},
+      </if>
+      <if test="claimdate != null">
+        claimdate = #{claimdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xzb.pojo.Lost">
+    update lost
+    set name = #{name,jdbcType=VARCHAR},
+      pickDate = #{pickDate,jdbcType=TIMESTAMP},
+      pickperson = #{pickperson,jdbcType=VARCHAR},
+      pickplace = #{pickplace,jdbcType=VARCHAR},
+      code = #{code,jdbcType=INTEGER},
+      claimperson = #{claimperson,jdbcType=VARCHAR},
+      claimdate = #{claimdate,jdbcType=TIMESTAMP},
+      cid = #{cid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
